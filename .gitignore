@@ -1,0 +1,8 @@
+*.png
+*.jpg
+*.pyc
+build/
+devel/
+*.pkl
+*.pth
+

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+	<include file="$(find pointcloud_to_laserscan)/launch/pcl2laser.launch"></include>
+	<include file="$(find mapping)/launch/pub_tf.launch"></include>
+	<include file="$(find hector_mapping)/launch/mapping_subt.launch"></include>
+</launch>
