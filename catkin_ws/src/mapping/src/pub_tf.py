@@ -27,7 +27,7 @@ def call_back(msg):
 
 	#quat = tf.transformations.quaternion_from_euler (-r, -p, -y)
 	# br.sendTransform((0, 0, 0), \
-	# 				 (0, 0, 0, 1), rospy.Time.now(), "/X1/base_footprint", "/scanmatcher_frame")
+	# 				 (0, 0, 0, 1), rospy.Time.now(), "map", "X1/odom")
 
 if __name__=="__main__":
 	# Tell ROS that we're making a new node.

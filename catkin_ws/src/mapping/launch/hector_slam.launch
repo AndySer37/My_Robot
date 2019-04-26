@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <launch>
-	<include file="$(find pointcloud_to_laserscan)/launch/pcl2laser.launch"></include>
+	<arg name="robot" default="X1" />
+	<arg name="tf_map_scanmatch_transform_frame_name" default="scanmatcher_frame"/>
+	<arg name="base_frame" default="X1/base_footprint"/>
+	<arg name="odom_frame" default="X1/odom"/>
+	<arg name="pub_map_odom_transform" default="false"/>
+	<arg name="scan_subscriber_queue_size" default="5"/>
+	<arg name="scan_topic" default="X1/scan"/>
+	<arg name="map_size" default="4096"/>
+
+
+	<include file="$(find pointcloud_to_laserscan)/launch/pcl2laser.launch">
+		<arg name="robot" value="$(arg robot)" />
+	</include>
+
 	<include file="$(find mapping)/launch/pub_tf.launch"></include>
-	<include file="$(find hector_mapping)/launch/mapping_subt.launch"></include>
+	
+	<include file="$(find hector_mapping)/launch/mapping_subt.launch">
+		<arg name="tf_map_scanmatch_transform_frame_name" value="$(arg robot)"/>
+		<arg name="base_frame" value="$(arg base_frame)"/>
+		<arg name="odom_frame" value="$(arg odom_frame)"/>
+		<arg name="pub_map_odom_transform" value="$(arg pub_map_odom_transform)"/>
+		<arg name="scan_subscriber_queue_size" value="$(arg scan_subscriber_queue_size)"/>
+		<arg name="scan_topic" value="$(arg scan_topic)"/>
+		<arg name="map_size" value="$(arg map_size)"/>
+	</include>
 </launch>

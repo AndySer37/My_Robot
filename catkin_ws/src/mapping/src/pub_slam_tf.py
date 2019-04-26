@@ -16,8 +16,8 @@ if __name__=="__main__":
 	while not rospy.is_shutdown():
 		try:
 			(trans,rot) = listener.lookupTransform('/scanmatcher_frame', '/slam_map', rospy.Time(0))
-			br.sendTransform(trans, rot, rospy.Time.now(), "slam_map", "/X1/base_footprint")
-			print "22222222222222222222"
+			br.sendTransform(trans, rot, rospy.Time.now(), "/slam_map", "/X1/base_footprint")
+
 		except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
 			continue	    
 		rate.sleep()
