@@ -43,8 +43,8 @@ class bb_ssd_mobile_lite(object):
 			model_name = "model.pth"
 		elif model == "v1":
 			self.network = create_mobilenetv1_ssd(len(self.labels), is_test=True) 
-			model_dir = "/home/andyser/code/exercise_ML/pytorch-ssd-mobile/models/subt_v1"
-			model_name = "Epoch-210-Loss-0.7545.pth"	
+			model_dir = "/home/nvidia"
+			model_name = "model.pth"	
 		elif model == "v1_lite":
 			self.network = create_mobilenetv1_ssd_lite(len(self.labels), is_test=True) 
 			model_dir = "/home/andyser/code/exercise_ML/pytorch-ssd-mobile/models/subt_v1_lite"
