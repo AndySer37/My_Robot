@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+<!--   <include file="$(find pcl_exercise)/launch/depth_to_point_whole.launch"></include> 
+  <include file="$(find pcl_exercise)/launch/depth_to_point.launch"></include>  -->
+  <!-- <include file="$(find bb_pointnet)/launch/bb_pointnet_seg.launch"></include>
+  <include file="$(find bb_pointnet)/launch/bb_pointnet_cls.launch"></include> -->
+  <include file="$(find ssd_mobile_lite)/launch/ssd_prediction.launch"></include>  
+  <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+		<arg name="depth_fps" value="15"/>
+		<arg name="color_fps" value="15"/>
+  </include>
+</launch>
