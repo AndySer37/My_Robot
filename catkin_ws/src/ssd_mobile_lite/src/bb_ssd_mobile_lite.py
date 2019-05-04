@@ -100,32 +100,6 @@ class bb_ssd_mobile_lite(object):
 		except CvBridgeError as e:
 			print(e)
 
-		# for obj in obj_list:
-		# 	out = bb_input()
-		# 	obj[0] = obj[0] - 5
-		# 	obj[1] = obj[1] - 5
-		# 	obj[2] = obj[2] + 10
-		# 	obj[3] = obj[3] + 10
-
-		# 	mask = np.zeros((rows, cols), dtype = np.uint8)
-		# 	point_list = [(int(obj[0]), int(obj[1])),(int(obj[0] + obj[2]),int(obj[1])),\
-		# 		(int(obj[0] + obj[2]), int(obj[1] + obj[3])), (int(obj[0]), int(obj[1] + obj[3]))]
-
-		# 	cv2.fillConvexPoly(mask, np.asarray(point_list,dtype = np.int), 255)
-		# 	# print point_list
-		# 	out.image = self.cv_bridge.cv2_to_imgmsg(img, "bgr8")
-		# 	out.mask = self.cv_bridge.cv2_to_imgmsg(mask, "8UC1")
-		# 	out.depth = depth
-		# 	out.header = img_msg.header
-		# 	self.mask_pub.publish(out.mask)
-		# 	self.origin.publish(out)
-
-		# try:
-		# 	img = self.cv_bridge.imgmsg_to_cv2(msg.data, "bgr8")
-		# 	depth = self.cv_bridge.imgmsg_to_cv2(msg.depth, "16FC1")
-		# 	mask = self.cv_bridge.imgmsg_to_cv2(msg.mask, "64FC1")
-		# except CvBridgeError as e:
-		# 	print(e)
 	def video_callback(self, img_msg):
 
 		try:
@@ -149,15 +123,6 @@ class bb_ssd_mobile_lite(object):
 		except CvBridgeError as e:
 			print(e)
 
-		# for obj in obj_list:
-		# 	mask = np.zeros((rows, cols), dtype = np.uint8)
-		# 	point_list = [(int(obj[0]), int(obj[1])),(int(obj[0] + obj[2]),int(obj[1])),\
-		# 		(int(obj[0] + obj[2]), int(obj[1] + obj[3])), (int(obj[0]), int(obj[1] + obj[3]))]
-
-		# 	cv2.fillConvexPoly(mask, np.asarray(point_list,dtype = np.int), 255)
-		# 	mask = self.cv_bridge.cv2_to_imgmsg(mask, "8UC1")
-		# 	self.mask_pub.publish(mask)
-
 	def predict(self, img):
 		# Preprocessing
 
@@ -167,25 +132,16 @@ class bb_ssd_mobile_lite(object):
 		print(1./(rospy.get_time() - time))
 		for i in range(boxes.size(0)):
 			box = boxes[i, :]
-			if (box[0], box[1]) != (box[2], box[3]):
-				cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 255, 0), 4)
+			check = True
+			for i in box:
+				if not 0 <= box < 640:
+					check = False
+			if check:
+				if (box[0], box[1]) != (box[2], box[3]):
+					cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 255, 0), 4)
 
-				label = "{}: {:.2f}".format(self.labels[labels[i]], probs[i])
-				cv2.putText(img, label,(box[0] + 20, box[1] + 40),cv2.FONT_HERSHEY_SIMPLEX,1,(255, 0, 255),2)
-
-
-		# for obj in objs:
-		# 	if obj[4] == 1:
-		# 		color = (0, 255, 255)
-		# 	elif obj[4] == 2:
-		# 		color = (255, 255, 0)
-		# 	elif obj[4] == 3:
-		# 		color = (255, 0, 255)
-		# 	else:
-		# 		color = (0, 0, 0)
-		# 	cv2.rectangle(img, (int(obj[0]), int(obj[1])),\
-		# 						(int(obj[0] + obj[2]), int(obj[1] + obj[3])), color, 3)
-		# 	cv2.putText(img, self.labels[obj[4]], (int(obj[0] + obj[2]), int(obj[1])), 0, 1, color,2)
+					label = "{}: {:.2f}".format(self.labels[labels[i]], probs[i])
+					cv2.putText(img, label,(box[0] + 20, box[1] + 40),cv2.FONT_HERSHEY_SIMPLEX,1,(255, 0, 255),2)
 
 		return img# , objs
 
