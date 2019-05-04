@@ -9,7 +9,7 @@
   <arg name="map_size" default="4096"/>
   
   <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
-    <rosparam command="load" file="$(find hector_mapping)/config/param.yaml"/>
+    <!-- <rosparam command="load" file="$(find hector_mapping)/config/param.yaml"/> -->
     <!-- Frame names -->
     <param name="base_frame" value="$(arg base_frame)" />
     <param name="odom_frame" value="$(arg odom_frame)" />

@@ -17,7 +17,8 @@
 	<include file="$(find mapping)/launch/pub_tf.launch"></include>
 	
 	<include file="$(find hector_mapping)/launch/mapping_subt.launch">
-		<arg name="tf_map_scanmatch_transform_frame_name" value="$(arg robot)"/>
+		<rosparam command="load" file="$(find mapping)/config/param.yaml"/>
+		<arg name="tf_map_scanmatch_transform_frame_name" value="$(arg tf_map_scanmatch_transform_frame_name)"/>
 		<arg name="base_frame" value="$(arg base_frame)"/>
 		<arg name="odom_frame" value="$(arg odom_frame)"/>
 		<arg name="pub_map_odom_transform" value="$(arg pub_map_odom_transform)"/>
