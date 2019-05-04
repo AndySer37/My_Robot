@@ -133,8 +133,8 @@ class bb_ssd_mobile_lite(object):
 		for i in range(boxes.size(0)):
 			box = boxes[i, :]
 			check = True
-			for i in box:
-				if not 0 <= box < 640:
+			for j in box:
+				if not 0 <= j < 640:
 					check = False
 			if check:
 				if (box[0], box[1]) != (box[2], box[3]):
