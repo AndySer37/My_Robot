@@ -86,8 +86,7 @@ class bb_ssd_mobile_lite(object):
 		(rows, cols, channels) = cv_image.shape
 		self.width = cols
 		self.height = rows
-		#predict_img, obj_list = self.predict(cv_image)
-		# predict_img = self.predict(cv_image)
+		predict_img = self.predict(cv_image)
 		# try:
 		# 	self.image_pub.publish(self.cv_bridge.cv2_to_imgmsg(predict_img, "bgr8"))
 		# except CvBridgeError as e:
