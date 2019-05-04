@@ -69,16 +69,9 @@ class bb_ssd_mobile_lite(object):
 		### msg filter 
 		self.is_compressed = False
 
-		video_mode = False 
-		if video_mode:
-			image_sub = rospy.Subscriber('/camera/color/image_raw', Image, self.video_callback)
-		else:
-			image_sub = message_filters.Subscriber('/camera/color/image_raw', Image)
-			depth_sub = message_filters.Subscriber('/camera/aligned_depth_to_color/image_raw', Image)
-			ts = message_filters.TimeSynchronizer([image_sub, depth_sub], 10)
-			ts.registerCallback(self.callback)
+		image_sub = rospy.Subscriber('/camera/color/image_raw', Image, self.callback)
 
-	def callback(self, img_msg, depth):
+	def callback(self, img_msg):
 		try:
 			if self.is_compressed:
 				np_arr = np.fromstring(img_msg.data, np.uint8)
@@ -100,28 +93,6 @@ class bb_ssd_mobile_lite(object):
 		# except CvBridgeError as e:
 		# 	print(e)
 
-	def video_callback(self, img_msg):
-
-		try:
-			if self.is_compressed:
-				np_arr = np.fromstring(img_msg.data, np.uint8)
-				cv_image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-			else:
-				cv_image = self.cv_bridge.imgmsg_to_cv2(img_msg, "bgr8")
-		except CvBridgeError as e:
-			print(e)
-		img = cv_image.copy()
-		
-
-		(rows, cols, channels) = cv_image.shape
-		self.width = cols
-		self.height = rows
-		#predict_img, obj_list = self.predict(cv_image)
-		predict_img = self.predict(cv_image)
-		try:
-			self.image_pub.publish(self.cv_bridge.cv2_to_imgmsg(predict_img, "bgr8"))
-		except CvBridgeError as e:
-			print(e)
 
 	def predict(self, img):
 		# Preprocessing
