@@ -43,11 +43,11 @@ class bb_ssd_mobile_lite(object):
 			model_name = "model.pth"
 		elif model == "v1":
 			self.network = create_mobilenetv1_ssd(len(self.labels), is_test=True) 
-			model_dir = "/home/andyser"
+			model_dir = "/home/nvidia"
 			model_name = "model.pth"	
 		elif model == "v1_lite":
 			self.network = create_mobilenetv1_ssd_lite(len(self.labels), is_test=True) 
-			model_dir = "/home/andyser/code/exercise_ML/pytorch-ssd-mobile/models/subt_v1_lite"
+			model_dir = "/home/nvidia/"
 			model_name = "Epoch-230-Loss-0.8001.pth"
 
 		state_dict = torch.load(os.path.join(model_dir, model_name))
@@ -86,10 +86,10 @@ class bb_ssd_mobile_lite(object):
 		self.width = cols
 		self.height = rows
 		predict_img = self.predict(cv_image)
-		# try:
-		# 	self.image_pub.publish(self.cv_bridge.cv2_to_imgmsg(predict_img, "bgr8"))
-		# except CvBridgeError as e:
-		# 	print(e)
+		try:
+			self.image_pub.publish(self.cv_bridge.cv2_to_imgmsg(predict_img, "bgr8"))
+		except CvBridgeError as e:
+			print(e)
 
 
 	def predict(self, img):
@@ -99,18 +99,18 @@ class bb_ssd_mobile_lite(object):
 		time = rospy.get_time()
 		boxes, labels, probs = self.predictor.predict(image, 10, self.prob_threshold)
 		print(1./(rospy.get_time() - time))
-		# for i in range(boxes.size(0)):
-		# 	box = boxes[i, :]
-		# 	check = True
-		# 	for j in box:
-		# 		if not 0 <= j < 640:
-		# 			check = False
-		# 	if check:
-		# 		if (box[0], box[1]) != (box[2], box[3]):
-		# 			cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 255, 0), 4)
+		for i in range(boxes.size(0)):
+			box = boxes[i, :]
+			check = True
+			for j in box:
+				if not 0 <= j < 640:
+					check = False
+			if check:
+				if (box[0], box[1]) != (box[2], box[3]):
+					cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), (255, 255, 0), 4)
 
-		# 			label = "{}: {:.2f}".format(self.labels[labels[i]], probs[i])
-		# 			cv2.putText(img, label,(box[0] + 20, box[1] + 40),cv2.FONT_HERSHEY_SIMPLEX,1,(255, 0, 255),2)
+					label = "{}: {:.2f}".format(self.labels[labels[i]], probs[i])
+					cv2.putText(img, label,(box[0] + 20, box[1] + 40),cv2.FONT_HERSHEY_SIMPLEX,1,(255, 0, 255),2)
 
 		return img# , objs
 
