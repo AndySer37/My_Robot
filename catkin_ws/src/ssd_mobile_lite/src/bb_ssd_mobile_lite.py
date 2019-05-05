@@ -43,7 +43,7 @@ class bb_ssd_mobile_lite(object):
 			model_name = "model.pth"
 		elif model == "v1":
 			self.network = create_mobilenetv1_ssd(len(self.labels), is_test=True) 
-			model_dir = "/home/nvidia"
+			model_dir = "/home/andyser"
 			model_name = "model.pth"	
 		elif model == "v1_lite":
 			self.network = create_mobilenetv1_ssd_lite(len(self.labels), is_test=True) 
@@ -80,7 +80,6 @@ class bb_ssd_mobile_lite(object):
 				cv_image = self.cv_bridge.imgmsg_to_cv2(img_msg, "bgr8")
 		except CvBridgeError as e:
 			print(e)
-		img = cv_image.copy()
 		
 
 		(rows, cols, channels) = cv_image.shape

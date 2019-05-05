@@ -5,7 +5,7 @@
   <!-- <include file="$(find bb_pointnet)/launch/bb_pointnet_seg.launch"></include>
   <include file="$(find bb_pointnet)/launch/bb_pointnet_cls.launch"></include> -->
   <include file="$(find ssd_mobile_lite)/launch/ssd_prediction.launch"></include>  
-  <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
 		<arg name="depth_fps" value="15"/>
 		<arg name="color_fps" value="15"/>
   </include>
