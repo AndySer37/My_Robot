@@ -48,7 +48,7 @@ class bb_ssd_mobile_lite(object):
 		elif model == "v1_lite":
 			self.network = create_mobilenetv1_ssd_lite(len(self.labels), is_test=True) 
 			model_dir = "/home/nvidia/"
-			model_name = "Epoch-230-Loss-0.8001.pth"
+			model_name = "model.pth"
 
 		state_dict = torch.load(os.path.join(model_dir, model_name))
 		self.network.load_state_dict(state_dict)
