@@ -30,7 +30,7 @@ from vision.ssd.mobilenet_v2_ssd_lite import create_mobilenetv2_ssd_lite, create
 
 class bb_ssd_mobile_lite(object):
 	def __init__(self):
-		model = "v1"
+		model = "v2_lite"
 		self.prob_threshold = 0.85
 		self.cv_bridge = CvBridge() 
 		self.num_points = 8000
@@ -40,7 +40,7 @@ class bb_ssd_mobile_lite(object):
 		if model == "v2_lite":
 			self.network = create_mobilenetv2_ssd_lite(len(self.labels), is_test=True) 
 			model_dir = "/home/nvidia"
-			model_name = "model.pth"
+			model_name = "model1.pth"
 		elif model == "v1":
 			self.network = create_mobilenetv1_ssd(len(self.labels), is_test=True) 
 			model_dir = "/home/nvidia"
