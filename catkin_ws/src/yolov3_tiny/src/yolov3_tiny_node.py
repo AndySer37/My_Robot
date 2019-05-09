@@ -26,7 +26,8 @@ from utils.parse_config import *
 class yolov3_node(object):
 	def __init__(self):
 		model_type = "yolov3-tiny"
-		config_path = "/home/andyser/code/David_dream/My_Robot/catkin_ws/src/yolov3_tiny/src"
+		# config_path = "/home/andyser/code/David_dream/My_Robot/catkin_ws/src/yolov3_tiny/src"
+		config_path = "/home/nvidia/code/My_Robot/catkin_ws/src/yolov3_tiny/src"
 		self.prob_threshold = 0.85
 		self.img_size = 416
 		self.cv_bridge = CvBridge() 
@@ -43,7 +44,7 @@ class yolov3_node(object):
 		self.cuda = torch.cuda.is_available()
 
 		if model_type == "yolov3-tiny":
-			self.model.load_state_dict(torch.load("/home/andyser/Desktop/model_yolo.pth"))
+			self.model.load_state_dict(torch.load("/home/nvidia/Desktop/model_yolo.pth"))
 		if self.cuda:
 			self.model = self.model.cuda()
 
