@@ -40,15 +40,15 @@ class bb_ssd_mobile_lite(object):
 		if model == "v2_lite":
 			self.network = create_mobilenetv2_ssd_lite(len(self.labels), is_test=True) 
 			model_dir = "/home/andyser/code/exercise_ML/pytorch-ssd-mobile/models/subt_v2_lite"
-			model_name = "Epoch-210-Loss-0.6495.pth"
+			model_name = "model.pth"
 		elif model == "v1":
 			self.network = create_mobilenetv1_ssd(len(self.labels), is_test=True) 
 			model_dir = "/home/andyser/code/exercise_ML/pytorch-ssd-mobile/models/subt_v1"
-			model_name = "Epoch-210-Loss-0.7545.pth"	
+			model_name = "model.pth"	
 		elif model == "v1_lite":
 			self.network = create_mobilenetv1_ssd_lite(len(self.labels), is_test=True) 
 			model_dir = "/home/andyser/code/exercise_ML/pytorch-ssd-mobile/models/subt_v1_lite"
-			model_name = "Epoch-230-Loss-0.8001.pth"
+			model_name = "model.pth"
 
 		state_dict = torch.load(os.path.join(model_dir, model_name))
 		self.network.load_state_dict(state_dict)
@@ -161,7 +161,7 @@ class bb_ssd_mobile_lite(object):
 	def predict(self, img):
 		# Preprocessing
 
-		image = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+		image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 		time = rospy.get_time()
 		boxes, labels, probs = self.predictor.predict(image, 10, self.prob_threshold)
 		print(1./(rospy.get_time() - time))
