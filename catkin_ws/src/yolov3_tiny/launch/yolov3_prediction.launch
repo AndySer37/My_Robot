@@ -1,0 +1,4 @@
+<?xml version="1.0" ?>
+<launch>
+  <node pkg="yolov3_tiny" type="yolov3_tiny_node.py" name="yolov3_tiny_node" output="screen"/>
+</launch>

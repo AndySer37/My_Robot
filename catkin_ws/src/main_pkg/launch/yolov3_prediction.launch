@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+  <include file="$(find yolov3_tiny)/launch/yolov3_prediction.launch"></include>  
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+		<arg name="depth_fps" value="15"/>
+		<arg name="color_fps" value="15"/>
+  </include>
+</launch>

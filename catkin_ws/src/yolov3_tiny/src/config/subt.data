@@ -1,0 +1,6 @@
+classes= 3
+train=/home/andyser/data/subt_real/ImageSets/Main/train.txt
+valid=/home/andyser/data/subt_real/ImageSets/Main/text.txt
+names=data/subt.names
+backup=backup/
+eval=subt
