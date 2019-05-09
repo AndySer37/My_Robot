@@ -95,7 +95,7 @@ class bb_ssd_mobile_lite(object):
 	def predict(self, img):
 		# Preprocessing
 
-		image = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+		image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 		time = rospy.get_time()
 		boxes, labels, probs = self.predictor.predict(image, 10, self.prob_threshold)
 		print(1./(rospy.get_time() - time))
