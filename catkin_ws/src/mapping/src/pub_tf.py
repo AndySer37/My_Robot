@@ -20,17 +20,9 @@ def call_back(msg):
 	M_inv =  np.linalg.inv(M)
 	trans = tf.transformations.translation_from_matrix(M_inv)
 	rot = tf.transformations.quaternion_from_matrix(M_inv)
-	t = rospy.Time.from_sec(0)
-	#t = rospy.Time.now()
-
-	br.sendTransform(trans, rot, rospy.Time.now(), map_id, "/X1/base_footprint")
-
-	#quat = tf.transformations.quaternion_from_euler (-r, -p, -y)
-	# br.sendTransform((0, 0, 0), \
-	# 				 (0, 0, 0, 1), rospy.Time.now(), "map", "X1/odom")
+	br.sendTransform(trans, rot, rospy.Time.now(), map_id, "/base_footprint")
 
 if __name__=="__main__":
-	# Tell ROS that we're making a new node.
 	rospy.init_node("tf_publisher",anonymous=False)
-	rospy.Subscriber("/X1/x1_velocity_controller/odom", Odometry, call_back, queue_size=1)
+	rospy.Subscriber("/husky_velocity_controller/odom", Odometry, call_back, queue_size=1)
 	rospy.spin()

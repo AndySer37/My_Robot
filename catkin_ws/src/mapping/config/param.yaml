@@ -1,8 +1,8 @@
 #<!-- Frame names -->
 map_frame: "slam_map"
-base_frame: "X1/base_footprint"
-odom_frame: "X1/odom"
-scan_topic: "X1/scan"
+base_frame: "/base_footprint"
+odom_frame: "/odom"
+scan_topic: "/scan"
 tf_map_scanmatch_transform_frame_name: "scanmatcher_frame"
 # <!-- Tf use -->
 use_tf_scan_transformation: "false"

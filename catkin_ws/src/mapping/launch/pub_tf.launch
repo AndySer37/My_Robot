@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <launch>
+	<node pkg="mapping" type="path_viz" name="path_viz" output="screen"></node>
 	<node pkg="mapping" type="pub_tf.py" name="pub_tf" output="screen"></node>
 	<node pkg="mapping" type="pub_slam_tf.py" name="pub_slam_tf" output="screen"></node>
 </launch>

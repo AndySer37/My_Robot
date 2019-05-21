@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   dynamic_reconfigure
+  visualization_msgs
   std_msgs
 )
 
@@ -195,6 +196,13 @@ include_directories(
 #############
 ## Testing ##
 #############
+
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIRS})
+
+add_executable(path_viz src/path_viz.h src/path_viz.cpp)
+target_link_libraries(path_viz ${catkin_LIBRARIES})
+
 
 ## Add gtest based cpp test target and link libraries
 # catkin_add_gtest(${PROJECT_NAME}-test test/test_mapping.cpp)
