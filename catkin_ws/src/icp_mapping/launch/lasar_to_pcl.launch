@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<launch>
+	<node pkg="icp_mapping" type="icp_mapping" name="icp_mapping" output="screen"></node>
+	<node pkg="icp_mapping" type="lasar_to_pcl" name="lasar_to_pcl" output="screen"></node>
+	<!-- <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lasar_to_pcl)/rviz/config.rviz" /> -->
+</launch>
