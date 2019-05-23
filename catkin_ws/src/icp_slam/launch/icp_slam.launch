@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<launch>
+	<node pkg="icp_slam" type="icp_slam" name="icp_slam" output="screen"></node>
+	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+		<remap from="/odom" to="/husky_velocity_controller/odom"/>
+		<remap from="/vo" to="/pc_loc_path"/>
+		<param name="output_frame" value="odom"/>
+		<param name="freq" value="30.0"/>
+		<param name="sensor_timeout" value="1.0"/>
+		<param name="odom_used" value="true"/>
+		<param name="imu_used" value="false"/>
+		<param name="vo_used" value="true"/>
+		<param name="debug" value="false"/>
+		<param name="self_diagnose" value="false"/>
+	</node>
+<!-- <node type="rviz" name="rviz" pkg="rviz" args="-d $(find icp_slam)/rviz/config.rviz" /> -->
+</launch>
