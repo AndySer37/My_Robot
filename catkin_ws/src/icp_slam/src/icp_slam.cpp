@@ -16,7 +16,8 @@ mapping::mapping(){
 	// 		  0.0, 0.0, 0.0, 0.001, 0.0, 0.0,\
 	// 		   0.0, 0.0, 0.0, 0.0, 0.001, 0.0,\
 	// 		    0.0, 0.0, 0.0, 0.0, 0.0, 0.03};
-	len = 12;
+	
+	len = 10; // 8
 	count = 0;
 	pc_buffer = vector< PointCloud<PointXYZ> >(0);
 	pc_transform = vector< Eigen::Matrix4f >(0);
@@ -40,21 +41,30 @@ mapping::mapping(){
 	marker.color.b = 1.0f;
 	marker.color.a = 1.0;
 
+
+	outdoor = false;
+	ground_filter = false;
+
 	initial_guess.setIdentity(4,4);
 
 	icp.setMaxCorrespondenceDistance(100);
-	icp.setTransformationEpsilon(1e-10);
-	icp.setEuclideanFitnessEpsilon(0.001);
-	icp.setMaximumIterations(100); 
+	icp.setTransformationEpsilon(1e-6);
+	icp.setEuclideanFitnessEpsilon(0.0001);
+	icp.setMaximumIterations(150); 
 
 	pass.setFilterFieldName ("z");
 	pass.setFilterLimits (-1, 1);
-
 	sor.setMeanK (50);
 	sor.setStddevMulThresh (0.4);
-	downsample.setLeafSize (0.1f, 0.1f, 0.1f);
-	downsample_map.setLeafSize (0.1, 0.1, 0.1);
 
+	if (outdoor){
+		downsample.setLeafSize (0.4, 0.4, 0.4);
+		downsample_map.setLeafSize (0.4, 0.4, 0.4);
+	}
+	else{
+		downsample.setLeafSize (0.1, 0.1, 0.1);
+		downsample_map.setLeafSize (0.1, 0.1, 0.1);
+	}
 	// Optional // plane filter 
 	seg.setOptimizeCoefficients (true);
 	// Mandatory
@@ -95,10 +105,18 @@ void mapping::process_node(const sensor_msgs::PointCloud2 msg){
 	// pre processing of input 
 	// pass.setInputCloud (pc_input);
 	// pass.filter (*pc_filter);
-	// sor.setInputCloud (pc_input);
-	// sor.filter (*pc_filter);
+	sor.setInputCloud (pc_input);
+	sor.filter (*pc_filter);
+	// plane removal
+	if(ground_filter){
+		seg.setInputCloud (pc_filter);
+		seg.segment (*inliers, *coefficients);
+		extract.setInputCloud (pc_filter);
+		extract.setIndices (inliers);
+		extract.filter (*pc_filter);
+	}
 
-	downsample.setInputCloud (pc_input);
+	downsample.setInputCloud (pc_filter);
 	downsample.filter (*pc_filter);
 	downsample.setInputCloud (pc_target);
 	downsample.filter (*pc_target);
@@ -161,11 +179,13 @@ void mapping::process_node(const sensor_msgs::PointCloud2 msg){
 }
 void mapping::add_map(){
 	// plane removal
-	// seg.setInputCloud (pc_input);
-	// seg.segment (*inliers, *coefficients);
-	// extract.setInputCloud (pc_input);
-	// extract.setIndices (inliers);
-	// extract.filter (*pc_input);
+	if(ground_filter){
+		seg.setInputCloud (pc_input);
+		seg.segment (*inliers, *coefficients);
+		extract.setInputCloud (pc_input);
+		extract.setIndices (inliers);
+		extract.filter (*pc_input);
+	}
 	////		
 	downsample_map.setInputCloud (pc_input);
 	downsample_map.filter (*pc_input);	

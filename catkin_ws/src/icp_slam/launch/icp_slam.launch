@@ -1,8 +1,9 @@
 <?xml version="1.0" ?>
 <launch>
 	<node pkg="icp_slam" type="icp_slam" name="icp_slam" output="screen"></node>
+	<node pkg="icp_slam" type="align_odom" name="align_odom" output="screen"></node>
 	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-		<remap from="/odom" to="/husky_velocity_controller/odom"/>
+		<remap from="/odom" to="/husky/transfer_odom"/>
 		<remap from="/vo" to="/pc_loc_path"/>
 		<param name="output_frame" value="odom"/>
 		<param name="freq" value="30.0"/>

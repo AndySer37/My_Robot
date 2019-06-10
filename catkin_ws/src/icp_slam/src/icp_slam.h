@@ -44,6 +44,8 @@ class mapping{
 	Publisher pc_map_loc_pub;
 	Subscriber pc_sub;
 
+	bool outdoor, ground_filter;
+
 	PointCloud<PointXYZ>::Ptr map;
 	PointCloud<PointXYZ>::Ptr map_process;
 	PointCloud<PointXYZ>::Ptr pc_input;
